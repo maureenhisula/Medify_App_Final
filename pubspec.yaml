@@ -1,0 +1,144 @@
+name: medify
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  photo_manager: ^3.0.0
+  shared_preferences: ^2.1.1
+  url_launcher: ^6.1.10
+  share_plus: ^12.0.0
+  permission_handler: ^11.3.1
+  package_info_plus: ^4.0.2
+  image_picker: ^1.1.2
+  mime: ^2.0.0
+  path_provider: ^2.1.5
+  tflite_flutter: ^0.11.0
+  video_player: ^2.10.0
+  image: ^4.0.17
+  camera: ^0.11.0+1
+  flutter_screenutil: ^5.9.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/logo.png
+    - assets/images/plant.png
+    - assets/images/alugbati.png
+    - assets/images/alugbati1.jpg
+    - assets/images/alugbati2.jpg
+    - assets/images/alugbati3.jpg
+    - assets/images/ampalaya.png
+    - assets/images/ampalaya1.jpg
+    - assets/images/ampalaya2.jpg
+    - assets/images/ampalaya3.jpg
+    - assets/images/cassava.png
+    - assets/images/cassava1.jpg
+    - assets/images/cassava2.jpg
+    - assets/images/cassava3.jpg
+    - assets/images/argaw.png
+    - assets/images/argaw1.jpg
+    - assets/images/argaw2.jpg
+    - assets/images/argaw3.jpg
+    - assets/images/buyo.png
+    - assets/images/buyo1.jpg
+    - assets/images/buyo2.jpg
+    - assets/images/buyo3.jpg
+    - assets/images/bayabas.png
+    - assets/images/bayabas1.jpg
+    - assets/images/bayabas2.jpg
+    - assets/images/bayabas3.jpg
+    - assets/images/damong maria.png
+    - assets/images/damong maria1.jpg
+    - assets/images/damong maria2.jpg
+    - assets/images/damong maria3.jpg
+    - assets/images/klabo.png
+    - assets/images/klabo1.jpeg
+    - assets/images/klabo2.jpeg
+    - assets/images/klabo3.jpeg
+    - assets/images/eampunaya.png
+    - assets/images/eampunaya1.jpg
+    - assets/images/eampunaya2.jpg
+    - assets/images/eampunaya3.jpg
+    - assets/images/malunggay.png
+    - assets/images/malunggay1.jpg
+    - assets/images/malunggay2.jpg
+    - assets/images/malunggay3.jpg
+    - assets/images/sambong.png
+    - assets/images/sambong1.jpg
+    - assets/images/sambong2.jpg
+    - assets/images/sambong3.jpg
+    - assets/images/kataka-taka.png
+    - assets/images/kataka-taka1.jpg
+    - assets/images/kataka-taka2.jpg
+    - assets/images/kataka-taka3.jpg
+    - assets/images/takip kuhol.png
+    - assets/images/takip kuhol1.jpg
+    - assets/images/takip kuhol2.jpg
+    - assets/images/takip kuhol3.jpg
+    - assets/images/pansit.png
+    - assets/images/pansit1.jpg
+    - assets/images/pansit2.jpg
+    - assets/images/pansit3.jpg
+    - assets/images/tsa.png
+    - assets/images/tsa1.jpg
+    - assets/images/tsa2.jpg
+    - assets/images/tsa3.jpg
+    - assets/images/tawa.png
+    - assets/images/tawa1.jpg
+    - assets/images/tawa2.jpg
+    - assets/images/tawa3.jpg
+    - assets/images/aloevera.png
+    - assets/images/aloevera1.jpg
+    - assets/images/aloevera2.jpg
+    - assets/images/aloevera3.jpg
+    - assets/images/akapulko.png
+    - assets/images/akapulko1.jpg
+    - assets/images/akapulko2.jpg
+    - assets/images/akapulko3.jpg
+    - assets/images/lagundi.png
+    - assets/images/lagundi1.jpg
+    - assets/images/lagundi2.jpg
+    - assets/images/lagundi3.jpg
+    - assets/images/tanglad.png
+    - assets/images/tanglad1.jpg
+    - assets/images/tanglad2.jpg
+    - assets/images/tanglad3.jpg
+    - assets/models/labels.txt
+    - assets/images/medify_logo.png
+    - assets/images/wrong1.png
+    - assets/images/check1.png
+    - assets/images/wrong2.png
+    - assets/images/check2.png
+    - assets/images/wrong3.jpeg
+    - assets/images/check3.jpeg
+    - assets/images/wrong4.png
+    - assets/images/check4.png
+    - assets/images/wrong5.png
+    - assets/images/check5.png
+    - assets/models/densenet_plant_model_final.tflite
+
+# ADD THIS SECTION AT THE END:
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/medify_logo.png"
+  min_sdk_android: 21
+
+  # For Android adaptive icons (optional but recommended)
+  adaptive_icon_background: "#ffffff" # White background
+  adaptive_icon_foreground: "assets/images/medify_logo.png"
+
+  # For iOS (optional - removes alpha channel)
+  remove_alpha_ios: true
