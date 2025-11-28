@@ -47,7 +47,6 @@ class FavoriteScreen extends StatelessWidget {
                         name: plant["displayName"] ?? "Unknown",
                         scientificName: plant["scientificName"] ?? "Unknown",
                         commonNames: plant["localName"] ?? "Unknown",
-                        englishName: plant["englishName"] ?? "Unknown",
                         onRemove: () {
                           FavoritesManager.instance.removeFavorite(plant);
                         },
@@ -65,7 +64,6 @@ class FavoriteScreen extends StatelessWidget {
     required String name,
     required String scientificName,
     required String commonNames,
-    required String englishName,
     required VoidCallback onRemove,
   }) {
     return Container(

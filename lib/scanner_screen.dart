@@ -456,7 +456,7 @@ class _ScannerScreenState extends State<ScannerScreen>
                       : Container(
                           height: width * 0.16,
                           width: width * 0.16,
-                          color: Colors.grey[300],
+                          color: const Color.fromARGB(255, 255, 254, 254),
                           child: Icon(
                             Icons.crop_free,
                             color: Colors.green,

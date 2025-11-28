@@ -223,7 +223,7 @@ class _ResultScreenPlantDetails {
     },
 
     "Oregano": {
-      "commonNames": "Oregano, Klabo, Kalabo, or Suganda",
+      "commonNames": "Oregano, Klabo, Suganda",
       "scientificName": "Coleus amboinicus",
       "image": "assets/images/klabo.png",
     },
@@ -234,7 +234,7 @@ class _ResultScreenPlantDetails {
       "image": "assets/images/sambong.png",
     },
     "Takip Kuhol": {
-      "commonNames": "Takip Kuhol",
+      "commonNames": "Takip Kuhol, Gotu Kola",
       "scientificName": "Centella asiatica",
       "image": "assets/images/takip kuhol.png",
     },

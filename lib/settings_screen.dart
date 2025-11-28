@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -64,26 +61,16 @@ class SettingsScreen extends StatelessWidget {
 
   // Share app
   void _shareApp() async {
-    try {
-      final byteData = await rootBundle.load('assets/images/medify_logo.png');
-      final tempDir = await getTemporaryDirectory();
-      final file = File('${tempDir.path}/medify_logo.png');
-      await file.writeAsBytes(byteData.buffer.asUint8List());
+    const appLink =
+        'https://drive.google.com/file/d/1QzEBW-vYvpxUx5rL4tOInEQh8lqlefTn/view?usp=share_link';
 
-      const appLink =
-          'https://drive.google.com/file/d/1NrbhR4ZnmHe5k7W0Ou_ANBCHN4QErDH5/view?fbclid=IwZXh0bgNhZW0CMTEAAR416Tak_k4f95swO9tYVgRkGoNgZlTB3M8yVmotBssypy6-pk0LbJxPqxmeHw_aem_PLt8klyo_BpXz2OJuy5qnA';
-
-      await SharePlus.instance.share(
-        ShareParams(
-          text:
-              '🌿 Check out Medify — your smart medicinal plant identifier app!\n\n📲 Download here: $appLink',
-          files: [XFile(file.path)],
-          subject: 'Medify — Smart Medicinal Plant Identifier',
-        ),
-      );
-    } catch (e) {
-      debugPrint('Error sharing app: $e');
-    }
+    await SharePlus.instance.share(
+      ShareParams(
+        text:
+            '🌿 Check out Medify — your smart medicinal plant identifier app!\n\n📲 Download here: $appLink',
+        subject: 'Medify — Smart Medicinal Plant Identifier',
+      ),
+    );
   }
 
   @override
@@ -100,7 +87,7 @@ class SettingsScreen extends StatelessWidget {
       // 1️⃣ Help Center / FAQs
       {"title": "Help Center / FAQs", "icon": Icons.help_outline},
       // 2️⃣ Tutorial Reset
-      {"title": "Tutorial / Onboarding Reset", "icon": Icons.school_outlined},
+      {"title": "App Tutorial", "icon": Icons.school_outlined},
       // 3️⃣ Support & Feedback
       {
         "title": "Support & Feedback",
@@ -322,12 +309,6 @@ class TutorialResetPage extends StatelessWidget {
       "description":
           "Scroll through the info panel to see all available data about the plant.",
     },
-    {
-      "icon": Icons.refresh_outlined,
-      "title": "Reset Tutorial",
-      "description":
-          "Replay the onboarding anytime from this screen using the reset button below.",
-    },
   ];
 
   @override
@@ -341,7 +322,7 @@ class TutorialResetPage extends StatelessWidget {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.green),
         title: const Text(
-          "Tutorial / Onboarding Reset",
+          "App Tutorial",
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
         ),
       ),
@@ -623,126 +604,92 @@ class _FAQTileState extends State<FAQTile> {
 }
 
 // 🧠 Generic InfoPage (for text-only content)
-class InfoPage extends StatelessWidget {
-  final String title;
-  final String content;
+class AboutInfoPage extends StatelessWidget {
+  const AboutInfoPage({super.key});
 
-  const InfoPage({super.key, required this.title, required this.content});
-
-  @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.green),
-        title: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.green,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(screenWidth * 0.043),
-        child: SingleChildScrollView(
-          child: SelectableText(
-            content,
-            style: const TextStyle(
-              fontSize: 16,
-              height: 1.6,
-              color: Colors.black87,
+  Widget sectionCard(String title, IconData icon, List<String> contents) {
+    return Card(
+      elevation: 3,
+      color: const Color.fromARGB(221, 255, 255, 255),
+      shadowColor: const Color.fromARGB(31, 255, 255, 255),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, color: Colors.green, size: 22),
+                const SizedBox(width: 10),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-          ),
+            const SizedBox(height: 10),
+            ...contents.map(
+              (text) => Padding(
+                padding: const EdgeInsets.only(left: 32.0, top: 4),
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    color: Colors.black.withValues(alpha: 0.8),
+                    fontSize: 15,
+                    height: 1.5,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
-}
 
-// 🌿 Custom About Page with proper UI layout
-class AboutInfoPage extends StatelessWidget {
-  const AboutInfoPage({super.key});
-
-  Widget buildSection(String title, IconData icon, List<Widget> children) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+  Widget developerCard(String name, String role, IconData icon, double width) {
+    return SizedBox(
+      width: width,
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        elevation: 2,
+        shadowColor: Colors.black12,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: Colors.green, size: 22),
-              const SizedBox(width: 8),
+              CircleAvatar(
+                radius: 28,
+                backgroundColor: Colors.green.withValues(alpha: 0.1),
+                child: Icon(icon, color: Colors.green, size: 32),
+              ),
+              const SizedBox(height: 12),
               Text(
-                title,
+                name,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
-                  color: Color.fromARGB(255, 31, 31, 31),
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 15,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                role,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.black.withValues(alpha: 0.7),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          ...children,
-        ],
-      ),
-    );
-  }
-
-  Widget buildText(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 32.0, top: 4),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: Colors.black.withValues(alpha: 0.8),
-          height: 1.5,
-          fontSize: 15,
         ),
-      ),
-    );
-  }
-
-  Widget buildDeveloper(
-    String name,
-    String role,
-    IconData icon, {
-    double iconSize = 40,
-    double nameFontSize = 16,
-    double roleFontSize = 14,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: Colors.green, size: iconSize),
-          const SizedBox(height: 8),
-          Text(
-            name,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: nameFontSize,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            role,
-            style: TextStyle(
-              color: Colors.black.withValues(alpha: 0.7),
-              fontSize: roleFontSize,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
       ),
     );
   }
@@ -750,110 +697,88 @@ class AboutInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final cardWidth = (screenWidth - 60) / 2; // 2 cards per row with spacing
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0,
         backgroundColor: Colors.white,
+        elevation: 0,
         iconTheme: const IconThemeData(color: Colors.green),
         title: const Text(
-          "About the App",
+          "About the App/Developer Info",
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(screenWidth * 0.053),
+        padding: EdgeInsets.all(screenWidth * 0.05),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildSection("App Info", Icons.apps, [
-              buildText("🌿 Medify v1.0 (Build 1.0.0 Stable)"),
-              buildText(
-                "A smart medicinal plant identifier and learning tool.",
-              ),
+            sectionCard("App Info", Icons.apps, [
+              "🌿 Medify v1.0 (Build 1.0.0 Stable)",
+              "A smart medicinal plant identifier and learning tool.",
             ]),
-            buildSection("Developers", Icons.person_outline, [
-              const SizedBox(height: 12),
-              Center(
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 60,
-                  runSpacing: 30,
-                  children: [
-                    SizedBox(
-                      width: 140,
-                      child: buildDeveloper(
-                        "Axle Lawrence Dangautan",
-                        "Model Training & App Developer",
-                        Icons.computer_outlined,
-                        iconSize: 36,
-                        nameFontSize: 14,
-                        roleFontSize: 12,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 140,
-                      child: buildDeveloper(
-                        "Maureen Shane Hisula",
-                        "UI Design & Dataset Lead",
-                        Icons.design_services_outlined,
-                        iconSize: 36,
-                        nameFontSize: 14,
-                        roleFontSize: 12,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 140,
-                      child: buildDeveloper(
-                        "Tricia Marie Balidio",
-                        "Image Capture & Documentation",
-                        Icons.camera_alt_outlined,
-                        iconSize: 36,
-                        nameFontSize: 14,
-                        roleFontSize: 12,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 140,
-                      child: buildDeveloper(
-                        "Shaira Jyka Nablo",
-                        "Data Support & Testing",
-                        Icons.science_outlined,
-                        iconSize: 36,
-                        nameFontSize: 14,
-                        roleFontSize: 12,
-                      ),
-                    ),
-                  ],
+            sectionCard("Purpose", Icons.spa_outlined, [
+              "Medify helps identify medicinal plants and provides accurate information about their traditional and scientific uses.",
+            ]),
+            sectionCard("Technology Used", Icons.memory_outlined, [
+              "Flutter for mobile development",
+              "TensorFlow Lite for AI model",
+              "DenseNet architecture for plant classification",
+              "Open Medicinal Plant Dataset for training",
+            ]),
+            sectionCard("Licenses & Credits", Icons.library_books_outlined, [
+              "Flutter & Dart",
+              "TensorFlow Lite",
+              "DenseNet Architecture",
+              "Open Medicinal Plant Dataset",
+              "Freepik & Local Capture for images",
+              "Philippine Medicinal Plants” references from government & educational sources",
+              "Online botanical databases and public-domain plant information",
+            ]),
+            sectionCard("Privacy", Icons.privacy_tip_outlined, [
+              "All plant scans are processed locally on your device. No personal images are stored or shared.",
+            ]),
+            const SizedBox(height: 20),
+            Text(
+              "Developers",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black.withValues(alpha: 0.9),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 16,
+              runSpacing: 16,
+              children: [
+                developerCard(
+                  "Axle Lawrence Dangautan",
+                  "Model Training & App Developer",
+                  Icons.computer_outlined,
+                  cardWidth,
                 ),
-              ),
-            ]),
-
-            const SizedBox(height: 16),
-            buildSection("Purpose", Icons.spa_outlined, [
-              buildText(
-                "Medify helps identify medicinal plants and provides accurate information about their traditional and scientific uses.",
-              ),
-            ]),
-            buildSection("Technology Used", Icons.memory_outlined, [
-              buildText("• Flutter for mobile development"),
-              buildText("• TensorFlow Lite for AI model"),
-              buildText("• MobileNet V2 architecture for plant classification"),
-              buildText("• Open Medicinal Plant Dataset for training"),
-            ]),
-            buildSection("Licenses & Credits", Icons.library_books_outlined, [
-              buildText("• Flutter & Dart"),
-              buildText("• TensorFlow Lite"),
-              buildText("• DenseNet Architecture"),
-              buildText("• Open Medicinal Plant Dataset"),
-              buildText("• Freepik & Local Capture for image resources"),
-            ]),
-            buildSection("Privacy", Icons.privacy_tip_outlined, [
-              buildText(
-                "All plant scans are processed locally on your device. No personal images are stored or shared.",
-              ),
-            ]),
+                developerCard(
+                  "Maureen Shane Hisula",
+                  "UI Design & Dataset Lead",
+                  Icons.design_services_outlined,
+                  cardWidth,
+                ),
+                developerCard(
+                  "Tricia Marie Balidio",
+                  "Image Capture & Documentation",
+                  Icons.camera_alt_outlined,
+                  cardWidth,
+                ),
+                developerCard(
+                  "Shaira Jyka Nablo",
+                  "Data Support & Testing",
+                  Icons.science_outlined,
+                  cardWidth,
+                ),
+              ],
+            ),
           ],
         ),
       ),

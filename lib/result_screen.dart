@@ -80,7 +80,7 @@ class _ResultScreenState extends State<ResultScreen> {
       ],
     },
     "Aloe Vera": {
-      "commonNames": "Aloe, Sabila, Burn Plant, First Aid Plant",
+      "commonNames": "Aloe, Sabila",
       "scientificName": "Aloe barbadensis Miller",
       "englishName": "Aloe Vera",
       "description":
@@ -162,7 +162,7 @@ class _ResultScreenState extends State<ResultScreen> {
       ],
     },
     "Bayawas": {
-      "commonNames": "Bayabas, Guava",
+      "commonNames": "Bayawas, Bayabas",
       "scientificName": "Psidium guajava",
       "englishName": "Guava",
       "description":
@@ -357,7 +357,7 @@ class _ResultScreenState extends State<ResultScreen> {
     "Lampunaya": {
       "commonNames": "Lampunaya, Mayana",
       "scientificName": "Plectranthus amboinicus",
-      "englishName": "Cuban Oregano / Indian Borage",
+      "englishName": "Mayana, Coleus.",
       "description":
           "Lampunaya (often *Plectranthus amboinicus*) is a fleshy aromatic herb with broad, succulent leaves and strong aroma. It is commonly used in Filipino and Southeast Asian folk medicine for respiratory and digestive complaints.",
       "medicinalUse": [
@@ -383,7 +383,7 @@ class _ResultScreenState extends State<ResultScreen> {
       ],
     },
     "Malunggay": {
-      "commonNames": "Malunggay, Moringa",
+      "commonNames": "Malunggay, Marunggay",
       "scientificName": "Moringa oleifera",
       "englishName": "Moringa",
       "description":
